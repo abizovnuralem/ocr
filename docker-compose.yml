@@ -1,0 +1,90 @@
+version: '3.8'
+services:
+  fastapi:
+    build: ./fastapi_service/app
+    ports:
+      - 8001:8000
+    command: uvicorn main:app --host 0.0.0.0 --reload
+
+    environment:
+      - CELERY_BROKER_URL=redis://redis_fastapi:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis_fastapi:6379/0
+
+    depends_on:
+      - redis_fastapi
+
+
+  celery_fastapi:
+    build: ./fastapi_service/app
+    command: celery -A tasks worker --loglevel=INFO
+    environment:
+      - CELERY_BROKER_URL=redis://redis_fastapi:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis_fastapi:6379/0
+
+    depends_on:
+      - fastapi
+      - redis_fastapi
+
+  redis_fastapi:
+    image: redis:latest
+    ports:
+      - '6379:6379'
+
+  tesseract:
+    build: ./tesseract/app
+    ports:
+      - 8002:8000
+    command: uvicorn main:app --host 0.0.0.0 --reload
+    environment:
+      - CELERY_BROKER_URL=redis://redis_tesseract:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis_tesseract:6379/0
+
+    depends_on:
+      - redis_tesseract
+
+  celery_tesseract:
+    build: ./tesseract/app
+    command: celery -A tasks worker --loglevel=INFO
+    environment:
+      - CELERY_BROKER_URL=redis://redis_tesseract:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis_tesseract:6379/0
+
+    depends_on:
+      - tesseract
+      - redis_tesseract
+
+  redis_tesseract:
+    image: redis:latest
+    ports:
+      - '6380:6379'
+
+
+  img_prepro:
+    build: ./img_preprocessing/app
+    ports:
+      - 8003:8000
+    command: uvicorn main:app --host 0.0.0.0 --reload
+    environment:
+      - CELERY_BROKER_URL=redis://redis_img_prepro:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis_img_prepro:6379/0
+
+    depends_on:
+      - redis_img_prepro
+
+  celery_img:
+    build: ./img_preprocessing/app
+    command: celery -A tasks worker --loglevel=INFO
+    environment:
+      - CELERY_BROKER_URL=redis://redis_img_prepro:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis_img_prepro:6379/0
+
+    depends_on:
+      - img_prepro
+      - redis_img_prepro
+
+  redis_img_prepro:
+    image: redis:latest
+    ports:
+      - '6381:6379'
+
+

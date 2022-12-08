@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+celery
+numpy
+Pillow
+opencv-python
+redis
