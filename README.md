@@ -19,3 +19,11 @@ To build your own OCR service for free using these tools, you can find basic gui
 For step-by-step instructions on how to set up your OCR microservice, please visit the following article: Building a FastAPI OCR Microservice (https://hackernoon.com/building-a-fastapi-ocr-microservice) .
 
 By following the guide, you will be able to deploy a fully functional OCR microservice that can be incorporated into various applications requiring text extraction from images.
+
+
+## Development
+To contribute or modify the project, refer to these resources for implementing additional features or improving the existing codebase. PRs are welcome!
+
+
+## License
+This project is licensed under the BSD 2-clause License - see the [LICENSE](https://github.com/abizovnuralem/go2_ros2_sdk/blob/master/LICENSE) file for details.
