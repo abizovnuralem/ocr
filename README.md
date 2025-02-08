@@ -12,6 +12,7 @@ Redis: An in-memory data structure store, used as a database, cache, and message
 Celery: An asynchronous task queue/job queue based on distributed message passing.
 Docker: A set of platform-as-a-service products that use OS-level virtualization to deliver software in packages called containers.
 
+
 ## Getting Started
 To build your own OCR service for free using these tools, you can find basic guidelines and instructions in the repository linked here. This setup allows for easy scaling and robust performance for OCR tasks.
 
